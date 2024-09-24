@@ -89,6 +89,13 @@ public class WindowX11 extends Window {
         return this;
     }
 
+    public Window setIconData(int width, int height, byte[] data) {
+        assert _onUIThread() : "Should be run on UI thread";
+        assert data.length == width*height*4 : "Incorrect icon data array length";
+        _nSetIconData(width, height, data);
+        return this;
+    }
+
     @Override
     public Window setTitlebarVisible(boolean value) {
         _nSetTitlebarVisible(value);
@@ -240,6 +247,7 @@ public class WindowX11 extends Window {
     @ApiStatus.Internal public native void _nRestore();
     @ApiStatus.Internal public native void _nSetTitle(byte[] title);
     @ApiStatus.Internal public native void _nSetX11Class(byte[] name, byte[] class_);
+    @ApiStatus.Internal public native void _nSetIconData(int width, int height, byte[] data);
     @ApiStatus.Internal public native void _nSetTitlebarVisible(boolean isVisible);
     @ApiStatus.Internal public native void _nSetFullScreen(boolean isFullScreen);
     @ApiStatus.Internal public native boolean _nIsFullScreen();
