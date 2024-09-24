@@ -76,6 +76,19 @@ public class WindowX11 extends Window {
         return this;
     }
 
+    public Window setX11Class(String class_) {
+        setX11Class(class_, class_);
+        return this;
+    }
+
+    public Window setX11Class(String name, String class_) {
+        assert _onUIThread() : "Should be run on UI thread";
+        try {
+            _nSetX11Class(name.getBytes("UTF-8"), class_.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException ignored) {}
+        return this;
+    }
+
     @Override
     public Window setTitlebarVisible(boolean value) {
         _nSetTitlebarVisible(value);
@@ -226,6 +239,7 @@ public class WindowX11 extends Window {
     @ApiStatus.Internal public native void _nMinimize();
     @ApiStatus.Internal public native void _nRestore();
     @ApiStatus.Internal public native void _nSetTitle(byte[] title);
+    @ApiStatus.Internal public native void _nSetX11Class(byte[] name, byte[] class_);
     @ApiStatus.Internal public native void _nSetTitlebarVisible(boolean isVisible);
     @ApiStatus.Internal public native void _nSetFullScreen(boolean isFullScreen);
     @ApiStatus.Internal public native boolean _nIsFullScreen();
